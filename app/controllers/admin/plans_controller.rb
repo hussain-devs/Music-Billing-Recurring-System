@@ -1,6 +1,6 @@
 class Admin::PlansController < Admin::BaseController
   include CrudResponseHandling
-  before_action :set_plan, only: %i[ update destroy ]
+  before_action :set_plan, only: %i[show edit update destroy]
 
   def index
     authorize Plan
@@ -21,6 +21,14 @@ class Admin::PlansController < Admin::BaseController
     else
       render :new, status: :unprocessable_entity
     end
+  end
+
+  def show
+    authorize @plan
+  end
+
+  def edit
+    authorize @plan
   end
 
   def update
@@ -52,6 +60,6 @@ class Admin::PlansController < Admin::BaseController
   end
 
   def plan_params
-    params.expect(plan: [ :name, :monthly_fee ])
+    params.expect(plan: [:name, :monthly_fee])
   end
 end
