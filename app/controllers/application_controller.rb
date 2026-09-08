@@ -6,4 +6,10 @@ class ApplicationController < ActionController::Base
   include Pagy::Method
 
   include Pundit::Authorization
+
+  private
+
+  def require_buyer
+    redirect_to root_path, alert: "Access Denied" unless current_user.buyer?
+  end
 end
