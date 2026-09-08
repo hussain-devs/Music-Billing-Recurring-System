@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :plans, only: [ :index ]
+  resources :subscriptions, only: [ :index, :create ]
   devise_for :users
 
   root "home#index"
@@ -60,6 +62,10 @@ Rails.application.routes.draw do
       resources :plan_features, only: [ :create, :destroy ]
     end
     resources :subscriptions, only: [ :index, :show ]
+  end
+
+  resource :payment_authorization, only: [ :show, :create ] do
+    get :confirm
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
