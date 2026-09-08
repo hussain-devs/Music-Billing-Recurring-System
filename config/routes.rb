@@ -44,5 +44,9 @@ Rails.application.routes.draw do
     resources :subscriptions, only: [ :index, :show ]
   end
 
+  resource :payment_authorization, only: [ :show, :create ] do
+    get :confirm
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
