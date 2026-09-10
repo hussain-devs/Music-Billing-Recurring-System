@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :plans, only: [ :index ]
-  resources :subscriptions, only: [ :index, :create ]
   devise_for :users
 
   root "home#index"
@@ -51,21 +49,15 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    get "features/index"
-    get "features/new"
-    get "features/edit"
-    get "features/show"
     root "dashboard#index"
 
     resources :features
+
     resources :plans do
       resources :plan_features, only: [ :create, :destroy ]
     end
-    resources :subscriptions, only: [ :index, :show ]
-  end
 
-  resource :payment_authorization, only: [ :show, :create ] do
-    get :confirm
+    resources :subscriptions, only: [ :index, :show ]
   end
 
   get "up" => "rails/health#show", as: :rails_health_check
