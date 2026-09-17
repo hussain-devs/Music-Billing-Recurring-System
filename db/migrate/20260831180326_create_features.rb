@@ -3,8 +3,8 @@ class CreateFeatures < ActiveRecord::Migration[8.1]
     create_table :features do |t|
       t.string :name, null: false
       t.string :code, null: false
-      t.decimal :unit_price
-      t.integer :max_unit_limit
+      t.decimal :unit_price, null: false
+      t.integer :max_unit_limit, null: false
 
       t.timestamps
     end

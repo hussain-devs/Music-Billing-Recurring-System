@@ -3,7 +3,7 @@ class CreateSubscriptions < ActiveRecord::Migration[8.1]
     create_table :subscriptions do |t|
       t.references :user, null: false, foreign_key: true
       t.references :plan, null: false, foreign_key: true
-      t.datetime :started_at
+      t.datetime :started_at, null: false
       t.datetime :unsubscribed_at
 
       t.timestamps
