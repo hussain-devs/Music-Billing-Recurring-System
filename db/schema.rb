@@ -89,6 +89,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_03_010248) do
     t.string "name", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_plans_on_name", unique: true
+    t.check_constraint "monthly_fee >= 0", name: "plans_monthly_fee_non_negative"
   end
 
   create_table "roles", force: :cascade do |t|
