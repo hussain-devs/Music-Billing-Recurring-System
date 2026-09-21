@@ -120,11 +120,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_24_104839) do
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
-  create_table "tests", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "transactions", force: :cascade do |t|
     t.decimal "amount"
     t.datetime "created_at", null: false
