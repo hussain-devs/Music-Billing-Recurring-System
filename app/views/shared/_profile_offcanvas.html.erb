@@ -51,8 +51,8 @@
       <div class="mb-4">
         <h6 class="fw-bold mb-3">Subscriptions</h6>
 
-        <% if current_user.subscriptions.any? %>
-          <% current_user.subscriptions.includes(:plan).each do |subscription| %>
+        <% if subscriptions.any? %>
+          <% subscriptions.each do |subscription| %>
             <div class="border rounded p-3 mb-2">
               <div class="fw-semibold">
                 <%= subscription.plan.name %>
@@ -98,6 +98,12 @@
                       url: profile_path,
                       method: :patch,
                       multipart: true do |form| %>
+
+          <% if current_user.errors.any? %>
+            <div class="alert alert-danger">
+              <%= current_user.errors.full_messages.to_sentence %>
+            </div>
+          <% end %>
 
           <div class="mb-3">
             <%= form.label :name, class: "form-label" %>

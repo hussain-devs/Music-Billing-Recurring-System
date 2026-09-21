@@ -15,11 +15,29 @@ class User < ApplicationRecord
 
   has_one_attached :profile_photo
 
+  validate :profile_photo_type_and_size
+
   validates :name, presence: true
 
   validates :billing_day, numericality: { only_integer: true, in: 1..30 }, allow_nil: true
 
+  scope :buyers, -> { joins(:role).where(roles: { role: "Buyer" }) }
+
   def admin? = role.role == "Admin"
 
   def buyer? = role.role == "Buyer"
+
+  private
+
+  def profile_photo_type_and_size
+    return unless profile_photo.attached?
+
+    unless profile_photo.content_type.in?(%w[image/png image/jpeg image/webp])
+      errors.add(:profile_photo, "must be a PNG, JPEG, or WebP image")
+    end
+
+    if profile_photo.byte_size > 5.megabytes
+      errors.add(:profile_photo, "must be less than 5 MB")
+    end
+  end
 end
