@@ -13,13 +13,14 @@ class BillingService
 
   def eligible_users
     User.where.not(billing_day: nil)
+      .includes(subscriptions: :subscription_statuses)
   end
 
   def charge_user!(user)
     return unless due_today?(user.billing_day)
 
     user.subscriptions.each do |subscription|
-      next unless subscription_active?(subscription)
+      next unless subscription.active?
 
       charge_subscription(user, subscription)
     end
@@ -34,10 +35,6 @@ class BillingService
     day = [ billing_day, last_day ].min
 
     @date.change(day: day)
-  end
-
-  def subscription_active?(subscription)
-    subscription.subscription_statuses.last&.active?
   end
 
   def charge_subscription(user, subscription)

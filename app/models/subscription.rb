@@ -15,6 +15,10 @@ class Subscription < ApplicationRecord
 
   scope :active, -> { where(unsubscribed_at: nil) }
 
+  def active?
+    subscription_statuses.last&.active?
+  end
+
   def usage_for(plan_feature)
     usage_entries.where(plan_feature_id: plan_feature.id).sum(:quantity)
   end
