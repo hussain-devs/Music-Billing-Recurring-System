@@ -7,7 +7,7 @@ class User < ApplicationRecord
   belongs_to :role
 
   has_many :subscriptions, dependent: :destroy
-  has_many :transactions, dependent: :destroy
+  has_many :transactions, dependent: :restrict_with_exception
 
   has_one :payment_authorization, dependent: :destroy
 

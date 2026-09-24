@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
+ActiveRecord::Schema[8.1].define(version: 2026_09_24_104839) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -42,11 +42,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
   create_table "features", force: :cascade do |t|
     t.string "code", null: false
     t.datetime "created_at", null: false
-    t.integer "max_unit_limit"
+    t.integer "max_unit_limit", null: false
     t.string "name", null: false
-    t.decimal "unit_price"
+    t.decimal "unit_price", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_features_on_code", unique: true
+    t.check_constraint "max_unit_limit >= 0", name: "features_max_unit_limit_non_negative"
+    t.check_constraint "unit_price >= 0", name: "features_unit_price_non_negative"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -61,13 +63,13 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
   end
 
   create_table "payment_authorizations", force: :cascade do |t|
-    t.boolean "authorized"
+    t.boolean "authorized", default: false, null: false
     t.datetime "created_at", null: false
     t.string "stripe_customer_id"
     t.string "stripe_payment_method_id"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
-    t.index ["user_id"], name: "index_payment_authorizations_on_user_id"
+    t.index ["user_id"], name: "index_payment_authorizations_on_user_id", unique: true
   end
 
   create_table "plan_features", force: :cascade do |t|
@@ -83,9 +85,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
 
   create_table "plans", force: :cascade do |t|
     t.datetime "created_at", null: false
-    t.decimal "monthly_fee", null: false
-    t.string "name", null: false
+    t.decimal "monthly_fee"
+    t.string "name"
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_plans_on_name", unique: true
   end
 
   create_table "roles", force: :cascade do |t|
@@ -98,7 +101,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
   create_table "subscription_statuses", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.boolean "is_using", default: false, null: false
-    t.string "status", null: false
+    t.integer "status", default: 0, null: false
     t.integer "subscription_id", null: false
     t.datetime "updated_at", null: false
     t.index ["subscription_id"], name: "index_subscription_statuses_on_subscription_id"
@@ -107,7 +110,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
   create_table "subscriptions", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.integer "plan_id", null: false
-    t.datetime "started_at"
+    t.datetime "started_at", null: false
     t.datetime "unsubscribed_at"
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
@@ -116,10 +119,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
   end
 
   create_table "transactions", force: :cascade do |t|
-    t.decimal "amount", null: false
+    t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "occurred_at"
-    t.string "status"
+    t.integer "status"
     t.string "stripe_payment_id"
     t.integer "subscription_id", null: false
     t.string "transaction_type"
@@ -140,10 +143,12 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_01_180800) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.text "about"
     t.integer "billing_day"
     t.datetime "created_at", null: false
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
+    t.text "interests"
     t.string "name", null: false
     t.datetime "remember_created_at"
     t.datetime "reset_password_sent_at"

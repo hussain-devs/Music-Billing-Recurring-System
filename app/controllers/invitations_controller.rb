@@ -10,8 +10,6 @@ class InvitationsController < ApplicationController
 
   def create
     @invitation = current_user.sent_invitations.build(invitation_params)
-
-    @invitation.token = SecureRandom.urlsafe_base64
     @invitation.expires_at = 48.hours.from_now
 
     if @invitation.save
