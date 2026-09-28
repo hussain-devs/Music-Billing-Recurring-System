@@ -20,10 +20,6 @@ class Admin::PlansController < Admin::BaseController
     end
   end
 
-  def show; end
-
-  def edit; end
-
   def update
     if @plan.update(plan_params)
       redirect_to admin_plan_path(@plan), notice: t("plans.update.success")
