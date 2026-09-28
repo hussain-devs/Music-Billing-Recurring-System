@@ -2,7 +2,7 @@ class Admin::SubscriptionsController < Admin::BaseController
   before_action :set_subscription, only: :show
 
   def index
-    @subscriptions = Subscription.with_details
+    @pagy, @subscriptions = pagy(:offset, subscriptions)
   end
 
   def show; end
@@ -10,6 +10,10 @@ class Admin::SubscriptionsController < Admin::BaseController
   private
 
   def set_subscription
-    @subscription = Subscription.with_details.find(params[:id])
+    @subscription = subscriptions.find(params[:id])
+  end
+
+  def subscriptions
+    Subscription.with_details
   end
 end

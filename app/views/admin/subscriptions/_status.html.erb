@@ -1,0 +1,5 @@
+<% status = subscription.subscription_statuses.max_by(&:created_at) %>
+
+<span class="badge bg-primary">
+  <%= status&.status&.humanize || "Unknown" %>
+</span>

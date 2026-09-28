@@ -2,9 +2,8 @@
 
 class Admin::DashboardController < Admin::BaseController
   def index
-    @plans_count = Plan.count
-    @features_count = Feature.count
-    @subscriptions_count = Subscription.count
-    @buyers_count = User.buyers.count
+    @plans_count = Plan.all.size
+    @features_count = Feature.all.size
+    @subscriptions_count = Subscription.all.size
   end
 end

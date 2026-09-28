@@ -33,13 +33,9 @@
       <%= @subscription.started_at %>
     </p>
 
-    <% status = @subscription.subscription_statuses.max_by(&:created_at) %>
-
     <p>
       <strong>Status:</strong>
-      <span class="badge bg-primary">
-        <%= status&.status&.humanize || "Unknown" %>
-      </span>
+      <%= render "status", subscription: @subscription %>
     </p>
   </div>
 </div>

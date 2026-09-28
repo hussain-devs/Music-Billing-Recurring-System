@@ -19,15 +19,11 @@
 
         <tbody>
           <% @subscriptions.each do |subscription| %>
-            <% status = subscription.subscription_statuses.max_by(&:created_at) %>
-
             <tr>
               <td><%= subscription.user.name %></td>
               <td><%= subscription.plan.name %></td>
               <td>
-                <span class="badge bg-primary">
-                  <%= status&.status&.humanize || "Unknown" %>
-                </span>
+                <%= render "status", subscription: subscription %>
               </td>
               <td><%= subscription.started_at.to_date %></td>
               <td>
@@ -45,3 +41,5 @@
     </div>
   </div>
 </div>
+
+<%== @pagy.series_nav(:bootstrap) %>

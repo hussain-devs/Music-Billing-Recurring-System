@@ -1,22 +1,30 @@
 class Admin::PlanFeaturesController < Admin::BaseController
+  include CrudResponseHandling
+
   before_action :set_plan
 
   def create
-    @plan_feature = @plan.plan_features.build(plan_feature_params)
+    plan_feature = @plan.plan_features.build(plan_feature_params)
 
-    if @plan_feature.save
-      redirect_to admin_plan_path(@plan), notice: "Feature added to plan."
-    else
-      redirect_to admin_plan_path(@plan),
-                  alert: @plan_feature.errors.full_messages.to_sentence
+    handle_crud_result(
+      plan_feature,
+      success_path: admin_plan_path(@plan),
+      success_message: "Feature added to plan."
+    ) do
+      plan_feature.save
     end
   end
 
   def destroy
-    @plan_feature = @plan.plan_features.find(params[:id])
-    @plan_feature.destroy
+    plan_feature = @plan.plan_features.find(params[:id])
 
-    redirect_to admin_plan_path(@plan), notice: "Feature removed from plan."
+    handle_crud_result(
+      plan_feature,
+      success_path: admin_plan_path(@plan),
+      success_message: "Feature removed from plan."
+    ) do
+      plan_feature.destroy
+    end
   end
 
   private
@@ -26,6 +34,6 @@ class Admin::PlanFeaturesController < Admin::BaseController
   end
 
   def plan_feature_params
-    params.expect(plan_feature: [:feature_id, :max_unit_price])
+    params.expect(plan_feature: [ :feature_id, :max_unit_price ])
   end
 end

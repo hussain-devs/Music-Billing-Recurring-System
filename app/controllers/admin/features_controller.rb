@@ -1,8 +1,8 @@
 class Admin::FeaturesController < Admin::BaseController
-  before_action :set_feature, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_feature, only: %i[show edit update destroy]
 
   def index
-    @features = Feature.all
+    @pagy, @features = pagy(:offset, Feature.all)
   end
 
   def new
@@ -19,10 +19,6 @@ class Admin::FeaturesController < Admin::BaseController
     end
   end
 
-  def show; end
-
-  def edit; end
-
   def update
     if @feature.update(feature_params)
       redirect_to admin_feature_path(@feature), notice: t("features.update.success")
@@ -35,7 +31,8 @@ class Admin::FeaturesController < Admin::BaseController
     if @feature.destroy
       redirect_to admin_features_path, notice: t("features.destroy.success")
     else
-      redirect_to admin_features_path, alert: @feature.errors.full_messages.to_sentence
+      redirect_to admin_features_path,
+                  alert: @feature.errors.full_messages.to_sentence
     end
   end
 
@@ -46,6 +43,6 @@ class Admin::FeaturesController < Admin::BaseController
   end
 
   def feature_params
-    params.expect(feature: [:name, :code, :unit_price, :max_unit_limit])
+    params.expect(feature: [ :name, :code, :unit_price, :max_unit_limit ])
   end
 end

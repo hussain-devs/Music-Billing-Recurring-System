@@ -1,8 +1,9 @@
 class Admin::PlansController < Admin::BaseController
-  before_action :set_plan, only: [ :show, :edit, :update, :destroy ]
+  include CrudResponseHandling
+  before_action :set_plan, only: %i[ update destroy ]
 
   def index
-    @plans = Plan.all
+    @pagy, @plans = pagy(:offset, Plan.all)
   end
 
   def new
@@ -19,10 +20,6 @@ class Admin::PlansController < Admin::BaseController
     end
   end
 
-  def show; end
-
-  def edit; end
-
   def update
     if @plan.update(plan_params)
       redirect_to admin_plan_path(@plan), notice: t("plans.update.success")
@@ -32,10 +29,12 @@ class Admin::PlansController < Admin::BaseController
   end
 
   def destroy
-    if @plan.destroy
-      redirect_to admin_plans_path, notice: t("plans.destroy.success")
-    else
-      redirect_to admin_plans_path, alert: @plan.errors.full_messages.to_sentence
+    handle_crud_result(
+      @plan,
+      success_path: admin_plans_path,
+      success_message: t("plans.destroy.success")
+    ) do
+      @plan.destroy
     end
   end
 
@@ -46,6 +45,6 @@ class Admin::PlansController < Admin::BaseController
   end
 
   def plan_params
-    params.expect(plan: [:name, :monthly_fee])
+    params.expect(plan: [ :name, :monthly_fee ])
   end
 end
