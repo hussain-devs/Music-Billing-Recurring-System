@@ -3,15 +3,18 @@ class Admin::PlansController < Admin::BaseController
   before_action :set_plan, only: %i[ update destroy ]
 
   def index
+    authorize Plan
     @pagy, @plans = pagy(:offset, Plan.all)
   end
 
   def new
     @plan = Plan.new
+    authorize @plan
   end
 
   def create
     @plan = Plan.new(plan_params)
+    authorize @plan
 
     if @plan.save
       redirect_to admin_plan_path(@plan), notice: t("plans.create.success")
@@ -21,6 +24,8 @@ class Admin::PlansController < Admin::BaseController
   end
 
   def update
+    authorize @plan
+
     if @plan.update(plan_params)
       redirect_to admin_plan_path(@plan), notice: t("plans.update.success")
     else
@@ -29,6 +34,8 @@ class Admin::PlansController < Admin::BaseController
   end
 
   def destroy
+    authorize @plan
+
     handle_crud_result(
       @plan,
       success_path: admin_plans_path,

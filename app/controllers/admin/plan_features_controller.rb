@@ -5,6 +5,7 @@ class Admin::PlanFeaturesController < Admin::BaseController
 
   def create
     plan_feature = @plan.plan_features.build(plan_feature_params)
+    authorize plan_feature
 
     handle_crud_result(
       plan_feature,
@@ -17,6 +18,7 @@ class Admin::PlanFeaturesController < Admin::BaseController
 
   def destroy
     plan_feature = @plan.plan_features.find(params[:id])
+    authorize plan_feature
 
     handle_crud_result(
       plan_feature,
