@@ -1,0 +1,9 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Subscription Details</h1>
+
+  <%= link_to "Back",
+      admin_subscriptions_path,
+      class: "btn btn-secondary" %>
+</div>
+
+<%= render "details", subscription: @subscription %>

@@ -1,0 +1,8 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h1>Features</h1>
+  <%= link_to "New Feature", new_admin_feature_path, class: "btn btn-primary" %>
+</div>
+
+<%= render @features %>
+
+<%== @pagy.series_nav(:bootstrap) %>
