@@ -1,0 +1,16 @@
+<tr>
+  <td><%= subscription.user.name %></td>
+  <td><%= subscription.plan.name %></td>
+  <td>
+    <%= render "status", subscription: subscription %>
+  </td>
+  <td><%= subscription.started_at.to_date %></td>
+  <td>
+    <%= subscription.usage_entries.sum(&:quantity) %> units
+  </td>
+  <td>
+    <%= link_to "View",
+        admin_subscription_path(subscription),
+        class: "btn btn-outline-primary btn-sm" %>
+  </td>
+</tr>

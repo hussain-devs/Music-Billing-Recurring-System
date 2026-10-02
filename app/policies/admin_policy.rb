@@ -1,6 +1,5 @@
 class AdminPolicy < ApplicationPolicy
   def show?
-    puts "PUNDIT USER: #{user.inspect}"
-    user&.admin? || false
+    user&.admin?
   end
 end
