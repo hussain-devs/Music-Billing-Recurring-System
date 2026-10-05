@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1>Dashboard</h1>
+    <p class="text-muted">Overview of your music application.</p>
+  </div>
+</div>
+
+<div class="row g-4">
+  <%= render "stat_card",
+      title: "Plans",
+      count: @plans_count,
+      path: admin_plans_path,
+      link_text: "Manage Plans" %>
+
+  <%= render "stat_card",
+      title: "Features",
+      count: @features_count,
+      path: admin_features_path,
+      link_text: "Manage Features" %>
+
+  <%= render "stat_card",
+      title: "Subscriptions",
+      count: @subscriptions_count,
+      path: admin_subscriptions_path,
+      link_text: "View Subscriptions" %>
+</div>
+
+<div class="mt-4">
+  <h3>Quick Actions</h3>
+
+  <div class="row g-3 mt-1">
+    <div class="col-md-4">
+      <%= link_to new_admin_plan_path, class: "btn btn-primary w-100 py-3" do %>
+        Create Plan
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <%= link_to new_admin_feature_path, class: "btn btn-success w-100 py-3" do %>
+        Create Feature
+      <% end %>
+    </div>
+
+    <div class="col-md-4">
+      <%= link_to new_invitation_path, class: "btn btn-info w-100 py-3" do %>
+        Send Invitation
+      <% end %>
+    </div>
+  </div>
+</div>

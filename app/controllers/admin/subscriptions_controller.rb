@@ -1,0 +1,22 @@
+class Admin::SubscriptionsController < Admin::BaseController
+  before_action :set_subscription, only: :show
+
+  def index
+    authorize Subscription
+    @pagy, @subscriptions = pagy(:offset, subscriptions)
+  end
+
+  def show
+    authorize @subscription
+  end
+
+  private
+
+  def set_subscription
+    @subscription = subscriptions.find(params[:id])
+  end
+
+  def subscriptions
+    Subscription.with_details
+  end
+end
