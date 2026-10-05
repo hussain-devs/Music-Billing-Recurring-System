@@ -51,7 +51,19 @@ export default class extends Controller {
       return
     }
 
-    window.location.href =
-      `/payment_authorization/confirm?payment_setup_intent_id=${setupIntent.id}`
+    const response = await fetch("/payment_authorization/confirm", {
+      method: "POST",
+      headers: {
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        payment_setup_intent_id: setupIntent.id
+      })
+    })
+
+    if (response.redirected) {
+      window.location.href = response.url
+    }
   }
 }

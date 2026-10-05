@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resource :profile, only: :update
+  resource :payment_authorization do
+    post :confirm, on: :collection
+  end
 
   devise_for :users
 
@@ -18,7 +21,6 @@ Rails.application.routes.draw do
         via: [ :get, :post ],
         as: :accept_invitation
 
-  root "home#index"
 
   namespace :admin do
     root "dashboard#index"
