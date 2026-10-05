@@ -68,3 +68,7 @@ end
 gem "devise", "~> 5.0"
 
 gem "fiddle", "~> 1.1"
+
+gem "pagy"
+
+gem "pundit", "~> 2.5"
