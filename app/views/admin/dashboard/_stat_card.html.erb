@@ -4,7 +4,7 @@
       <h6 class="text-muted"><%= title %></h6>
       <h2><%= count %></h2>
 
-      <% if path %>
+      <% if local_assigns[:path] %>
         <div class="mt-auto">
           <%= link_to link_text,
               path,

@@ -23,6 +23,10 @@
       count: @subscriptions_count,
       path: admin_subscriptions_path,
       link_text: "View Subscriptions" %>
+
+  <%= render "stat_card",
+      title: "Buyers",
+      count: @buyers_count%>
 </div>
 
 <div class="mt-4">
@@ -42,7 +46,7 @@
     </div>
 
     <div class="col-md-4">
-      <%= link_to new_invitation_path, class: "btn btn-info w-100 py-3" do %>
+      <%= link_to new_invitation_path, class: "btn btn-dark w-100 py-3" do %>
         Send Invitation
       <% end %>
     </div>
