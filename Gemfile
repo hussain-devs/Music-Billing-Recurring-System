@@ -69,10 +69,8 @@ gem "devise", "~> 5.0"
 
 gem "fiddle", "~> 1.1"
 
-<<<<<<< HEAD
 gem "pagy"
 
 gem "pundit", "~> 2.5"
-=======
+
 gem "stripe", "~> 19.6"
->>>>>>> ea7710a (feat (buyer & stripe): Implement buyer subscriptions and Stripe payment authorizations)
