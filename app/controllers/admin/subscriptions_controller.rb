@@ -2,10 +2,13 @@ class Admin::SubscriptionsController < Admin::BaseController
   before_action :set_subscription, only: :show
 
   def index
+    authorize Subscription
     @pagy, @subscriptions = pagy(:offset, subscriptions)
   end
 
-  def show; end
+  def show
+    authorize @subscription
+  end
 
   private
 

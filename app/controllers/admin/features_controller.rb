@@ -3,15 +3,18 @@ class Admin::FeaturesController < Admin::BaseController
   layout "admin"
 
   def index
+    authorize Feature
     @pagy, @features = pagy(:offset, Feature.all)
   end
 
   def new
     @feature = Feature.new
+    authorize @feature
   end
 
   def create
     @feature = Feature.new(feature_params)
+    authorize @feature
 
     if @feature.save
       redirect_to admin_feature_path(@feature), notice: t("features.create.success")
@@ -21,6 +24,8 @@ class Admin::FeaturesController < Admin::BaseController
   end
 
   def update
+    authorize @feature
+
     if @feature.update(feature_params)
       redirect_to admin_feature_path(@feature), notice: t("features.update.success")
     else
@@ -29,6 +34,8 @@ class Admin::FeaturesController < Admin::BaseController
   end
 
   def destroy
+    authorize @feature
+
     if @feature.destroy
       redirect_to admin_features_path, notice: t("features.destroy.success")
     else
