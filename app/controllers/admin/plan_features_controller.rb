@@ -2,6 +2,7 @@ class Admin::PlanFeaturesController < Admin::BaseController
   include CrudResponseHandling
   layout "admin"
 
+  layout "admin"
   before_action :set_plan
 
   def create

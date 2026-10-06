@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[8.1].define(version: 2026_09_24_104839) do
-
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -90,6 +89,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_24_104839) do
     t.string "name"
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_plans_on_name", unique: true
+    t.check_constraint "monthly_fee >= 0", name: "plans_monthly_fee_non_negative"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -117,11 +117,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_24_104839) do
     t.integer "user_id", null: false
     t.index ["plan_id"], name: "index_subscriptions_on_plan_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
-  end
-
-  create_table "tests", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "transactions", force: :cascade do |t|

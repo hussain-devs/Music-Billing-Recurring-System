@@ -18,5 +18,11 @@ class Admin::SubscriptionsController < Admin::BaseController
 
   def subscriptions
     Subscription.with_details
+    @subscription = Subscription.includes(
+      :user,
+      :plan,
+      :subscription_statuses,
+      usage_entries: { plan_feature: :feature }
+    ).find(params[:id])
   end
 end
