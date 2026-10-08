@@ -36,5 +36,17 @@ Rails.application.routes.draw do
   end
 
 
+  namespace :admin do
+    root "dashboard#index"
+
+    resources :features
+
+    resources :plans do
+      resources :plan_features, only: [ :create, :destroy ]
+    end
+
+    resources :subscriptions, only: [ :index, :show ]
+  end
+
   get "up" => "rails/health#show", as: :rails_health_check
 end
