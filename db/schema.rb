@@ -66,6 +66,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_09_24_104839) do
   create_table "payment_authorizations", force: :cascade do |t|
     t.boolean "authorized", default: false, null: false
     t.datetime "created_at", null: false
+    t.string "payment_method_type", default: "card", null: false
     t.string "stripe_customer_id"
     t.string "stripe_payment_method_id"
     t.datetime "updated_at", null: false

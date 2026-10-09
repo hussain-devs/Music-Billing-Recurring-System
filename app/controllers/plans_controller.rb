@@ -1,9 +1,4 @@
-class PlansController < ApplicationController
-  layout "buyer"
-
-  before_action :authenticate_user!
-  before_action :require_buyer
-
+class PlansController < Buyer::BaseController
   def index
     @plans = Plan.includes(:features).all
   end

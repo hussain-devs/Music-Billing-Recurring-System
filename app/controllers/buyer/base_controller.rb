@@ -1,10 +1,11 @@
 class Buyer::BaseController < ApplicationController
+  layout "buyer"
   before_action :authenticate_user!
-  before_action :require_buyer
+  before_action :authorize_buyer
 
   private
 
-  def require_buyer
+  def authorize_buyer
     redirect_to root_path, alert: "Access Denied" unless current_user.buyer?
   end
 end

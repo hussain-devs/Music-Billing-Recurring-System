@@ -1,6 +1,4 @@
 class SubscriptionsController < Buyer::BaseController
-  layout "buyer"
-
   before_action :set_plan, only: :create
 
   def index
@@ -14,7 +12,6 @@ class SubscriptionsController < Buyer::BaseController
     )
 
     if subscription.save
-      SubscriptionStatus.create!(subscription: subscription, status: :active, is_using: true)
       redirect_to subscriptions_path, notice: "Subscription created successfully"
     else
       redirect_to plans_path, alert: subscription.errors.full_messages.to_sentence

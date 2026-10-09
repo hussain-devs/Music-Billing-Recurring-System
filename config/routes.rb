@@ -1,48 +1,33 @@
 Rails.application.routes.draw do
-  resources :plans, only: [ :index ]
-  resources :subscriptions, only: [ :index, :create ]
   devise_for :users
+
+  root "invitations#new"
 
   resources :invitations, only: [ :new, :create ]
 
   match "/invitations/:token/accept",
-        to: "invitations#accept",
-        via: [ :get, :post ],
-        as: :accept_invitation
+      to: "invitations#accept",
+      via: [ :get, :post ],
+      as: :accept_invitation
 
-  root "home#index"
-
-  namespace :admin do
-    get "features/index"
-    get "features/new"
-    get "features/edit"
-    get "features/show"
-    root "dashboard#index"
-
-    resources :features
-    resources :plans do
-      resources :plan_features, only: [ :create, :destroy ]
-    end
-    resources :subscriptions, only: [ :index, :show ]
-  end
+  resources :plans, only: [ :index ]
+  resources :subscriptions, only: [ :index, :create ]
 
   resource :payment_authorization, only: [ :show, :create ] do
     get :confirm
   end
 
-  namespace :admin do
-    get "features/index"
-    get "features/new"
-    get "features/edit"
-    get "features/show"
+    namespace :admin do
     root "dashboard#index"
 
     resources :features
+
     resources :plans do
       resources :plan_features, only: [ :create, :destroy ]
     end
+
     resources :subscriptions, only: [ :index, :show ]
   end
 
-  get "up" => "rails/health#show", as: :rails_health_check
+  get "up", to: "rails/health#show", as: :rails_health_check
 end
