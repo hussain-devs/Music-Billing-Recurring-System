@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <div>
+    <h1>Available Plans</h1>
+    <p class="text-muted mb-0">
+      Choose a subscription plan for your music experience.
+    </p>
+  </div>
+
+  <%= link_to "My Subscriptions",
+      subscriptions_path,
+      class: "btn btn-outline-primary" %>
+</div>
+
+<div class="row g-4">
+  <%= render partial: "plan", collection: @plans, as: :plan %>
+</div>

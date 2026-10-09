@@ -72,3 +72,5 @@ gem "fiddle", "~> 1.1"
 gem "pagy"
 
 gem "pundit", "~> 2.5"
+
+gem "stripe", "~> 19.6"

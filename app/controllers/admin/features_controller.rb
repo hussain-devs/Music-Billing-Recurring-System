@@ -1,5 +1,6 @@
 class Admin::FeaturesController < Admin::BaseController
   before_action :set_feature, only: %i[show edit update destroy]
+  layout "admin"
 
   def index
     authorize Feature
