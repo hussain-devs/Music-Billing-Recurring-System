@@ -1,11 +1,9 @@
 Rails.application.routes.draw do
-  resources :plans, only: [ :index ]
-  resources :subscriptions, only: [ :index, :create ]
   devise_for :users
 
   root "home#index"
 
-  resources :plans, only: :index
+  resources :plans, only: [ :index ]
 
   resources :subscriptions, only: [ :index, :create ] do
     resources :usage_entries, only: :create
@@ -18,7 +16,9 @@ Rails.application.routes.draw do
         via: [ :get, :post ],
         as: :accept_invitation
 
-  root "home#index"
+  resource :payment_authorization, only: [ :show, :create ] do
+    get :confirm
+  end
 
   namespace :admin do
     root "dashboard#index"
@@ -30,11 +30,7 @@ Rails.application.routes.draw do
     end
 
     resources :subscriptions, only: [ :index, :show ]
-    
-    resource :payment_authorization, only: [ :show, :create ] do
-    get :confirm
   end
-
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

@@ -4,18 +4,10 @@ class UsageEntriesController < ApplicationController
   before_action :set_plan_feature
 
   def create
-    previous_usage = @subscription.usage_for(@plan_feature)
-
     @usage_entry = @subscription.usage_entries.build(usage_entry_params)
     @usage_entry.plan_feature = @plan_feature
 
     if @usage_entry.save
-      UsageLimitNotifier.call(
-        subscription: @subscription,
-        plan_feature: @plan_feature,
-        previous_usage: previous_usage
-      )
-
       redirect_to subscriptions_path, notice: "Usage added successfully."
     else
       redirect_to subscriptions_path,
