@@ -3,4 +3,6 @@ class PaymentAuthorization < ApplicationRecord
 
   validates :stripe_customer_id, presence: true, if: :authorized?
   validates :stripe_payment_method_id, presence: true, if: :authorized?
+
+  enum :payment_method_type, { card: "card" }, default: :card
 end

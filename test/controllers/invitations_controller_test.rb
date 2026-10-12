@@ -19,7 +19,7 @@ class InvitationsControllerTest < ActionDispatch::IntegrationTest
       post invitations_path, params: { invitation: { email: "newuser@example.com" } }
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to admin_root_path
   end
 
   test "should redirect accept when token is invalid" do
