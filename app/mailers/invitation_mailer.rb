@@ -6,6 +6,7 @@ class InvitationMailer < ApplicationMailer
 
     mail(
       to: @invitation.email,
+      from: Rails.application.credentials.dig(:gmail, :username).presence || "from@example.com",
       subject: t(".subject")
     )
   end
